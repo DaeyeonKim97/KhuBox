@@ -1,0 +1,25 @@
+# khubox-api
+venv/
+*.pyc
+*~
+__pycache__
+db.sqlite3
+
+# khubox-front
+.pnp/
+build/
+coverage/
+node_modules/
+.env.development.local
+.env.local
+.env.production.local
+.env.test.local
+.pnp.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# environments
+.idea/
+.vscode/
+.DS_Store
