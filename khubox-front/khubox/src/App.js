@@ -70,6 +70,72 @@ const LeftSideBar = () => {
   );
 }
 
+const MainContent = () => {
+  return (
+  <main role="main" class="col-md-8 ml-sm-auto col-lg-8 px-4">
+    <h2>내 드라이브</h2>
+      <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th>파일 유형</th>
+              <th>이름</th>
+              <th>소유자</th>
+              <th>마지막으로 수정한 날짜</th>
+              <th>파일 크기</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1,001</td>
+              <td>Lorem</td>
+              <td>ipsum</td>
+              <td>dolor</td>
+              <td>sit</td>
+            </tr>
+            <tr>
+              <td>1,002</td>
+              <td>amet</td>
+              <td>consectetur</td>
+              <td>adipiscing</td>
+              <td>elit</td>
+            </tr>
+            <tr>
+              <td>1,003</td>
+              <td>Integer</td>
+              <td>nec</td>
+              <td>odio</td>
+              <td>Praesent</td>
+            </tr>
+            <tr>
+              <td>1,003</td>
+              <td>libero</td>
+              <td>Sed</td>
+              <td>cursus</td>
+              <td>ante</td>
+            </tr>
+            <tr>
+              <td>1,004</td>
+              <td>dapibus</td>
+              <td>diam</td>
+              <td>Sed</td>
+              <td>nisi</td>
+            </tr>
+            <tr>
+              <td>1,005</td>
+              <td>Nulla</td>
+              <td>quis</td>
+              <td>sem</td>
+              <td>at</td>
+            </tr>
+          
+          </tbody>
+        </table>
+      </div>
+    </main>
+  );
+}
+
 const RightSideBar = () => {
   return (
     <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -110,8 +176,10 @@ function App() {
   return (
     <div className="App">
       <NavBar />
+      {/* padding top required */}
       <div class="row">
         <LeftSideBar />
+        <MainContent />
         <RightSideBar />
       </div>
     </div>
