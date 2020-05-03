@@ -34,10 +34,12 @@ const Topbar = props => {
     >
       <Toolbar>
         <RouterLink to="/">
+          <h1>KhuBox</h1>
+          {/*
           <img
             alt="Logo"
             src="/images/logos/logo--white.svg"
-          />
+          />*/}
         </RouterLink>
         <div className={classes.flexGrow} />
         <Hidden mdDown>
