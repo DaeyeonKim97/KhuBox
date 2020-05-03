@@ -9,7 +9,7 @@ import {
   RecentFileList as RecentFileListView,
   MyDrive as MyDriveView,
   SharedFileList as SharedFileView,
-  Typography as TypographyView,
+  Trash as TrashView,
   Icons as IconsView,
   Account as AccountView,
   Settings as SettingsView,
@@ -45,7 +45,7 @@ const Routes = () => {
         path="/recent"
       />
       <RouteWithLayout
-        component={TypographyView}
+        component={TrashView}
         exact
         layout={MainLayout}
         path="/trash"

@@ -9,3 +9,4 @@ export { default as SignUp } from './SignUp';
 export { default as Typography } from './Typography';
 export { default as MyDrive } from './MyDrive';
 export { default as SharedFileList } from './SharedFileList';
+export { default as Trash } from './Trash';
