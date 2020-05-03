@@ -27,9 +27,9 @@ const Profile = props => {
   const classes = useStyles();
 
   const user = {
-    name: 'Shen Zhi',
+    name: '엄준식',
     avatar: '/images/avatars/avatar_11.png',
-    bio: 'Brain Director'
+    membership: 'Basic Plan'
   };
 
   return (
@@ -50,7 +50,7 @@ const Profile = props => {
       >
         {user.name}
       </Typography>
-      <Typography variant="body2">{user.bio}</Typography>
+      <Typography variant="body2">{user.membership}</Typography>
     </div>
   );
 };
