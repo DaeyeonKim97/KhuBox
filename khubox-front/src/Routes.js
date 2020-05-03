@@ -23,37 +23,31 @@ const Routes = () => {
       <Redirect
         exact
         from="/"
-        to="/dashboard"
+        to="/my-drive"
       />
       <RouteWithLayout
         component={DashboardView}
         exact
         layout={MainLayout}
-        path="/dashboard"
+        path="/my-drive"
       />
       <RouteWithLayout
         component={UserListView}
         exact
         layout={MainLayout}
-        path="/users"
+        path="/share"
       />
       <RouteWithLayout
         component={ProductListView}
         exact
         layout={MainLayout}
-        path="/products"
+        path="/recent"
       />
       <RouteWithLayout
         component={TypographyView}
         exact
         layout={MainLayout}
-        path="/typography"
-      />
-      <RouteWithLayout
-        component={IconsView}
-        exact
-        layout={MainLayout}
-        path="/icons"
+        path="/trash"
       />
       <RouteWithLayout
         component={AccountView}

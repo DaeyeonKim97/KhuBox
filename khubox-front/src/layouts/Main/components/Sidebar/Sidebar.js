@@ -45,22 +45,22 @@ const Sidebar = props => {
   const pages = [
     {
       title: '내 드라이브',
-      href: '/dashboard',
+      href: '/my-drive',
       icon: <DashboardIcon />
     },
     {
       title: '공유함',
-      href: '/users',
+      href: '/share',
       icon: <PeopleIcon />
     },
     {
       title: '최근 열어본 파일',
-      href: '/products',
+      href: '/recent',
       icon: <ShoppingBasketIcon />
     },
     {
       title: '휴지통',
-      href: '/sign-in',
+      href: '/trash',
       icon: <LockOpenIcon />
     },
     {
