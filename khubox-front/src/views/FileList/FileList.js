@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
-import { UsersToolbar, UsersTable } from './components';
+import { DriveToolbar, FileTable } from './components';
 import mockData from './data';
 
 const useStyles = makeStyles(theme => ({
@@ -13,19 +13,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserList = () => {
+const FileList = () => {
   const classes = useStyles();
 
   const [users] = useState(mockData);
 
   return (
     <div className={classes.root}>
-      <UsersToolbar />
+      <DriveToolbar />
       <div className={classes.content}>
-        <UsersTable users={users} />
+        <FileTable users={users} />
       </div>
     </div>
   );
 };
 
-export default UserList;
+export default FileList;

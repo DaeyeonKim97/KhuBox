@@ -28,7 +28,7 @@ const Profile = props => {
 
   const user = {
     name: '엄준식',
-    avatar: '/images/avatars/avatar_11.png',
+    avatar: '/images/avatars/avatar_1.png',
     membership: 'Basic Plan'
   };
 

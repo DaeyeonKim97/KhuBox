@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UsersToolbar = props => {
+const DriveToolbar = props => {
   const { className, ...rest } = props;
 
   const classes = useStyles();
@@ -40,27 +40,27 @@ const UsersToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-        <Button className={classes.importButton}>Import</Button>
-        <Button className={classes.exportButton}>Export</Button>
+        <Button className={classes.importButton}>새 폴더</Button>
+        <Button className={classes.exportButton}>폴더 업로드</Button>
         <Button
           color="primary"
           variant="contained"
         >
-          Add user
+          파일 업로드
         </Button>
       </div>
       <div className={classes.row}>
         <SearchInput
           className={classes.searchInput}
-          placeholder="Search user"
+          placeholder="파일, 폴더 검색"
         />
       </div>
     </div>
   );
 };
 
-UsersToolbar.propTypes = {
+DriveToolbar.propTypes = {
   className: PropTypes.string
 };
 
-export default UsersToolbar;
+export default DriveToolbar;
