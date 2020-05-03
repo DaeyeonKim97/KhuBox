@@ -7,7 +7,8 @@ import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 import {
   Dashboard as DashboardView,
   ProductList as ProductListView,
-  FileList as FileListView,
+  MyDrive as MyDriveView,
+  SharedFileList as SharedFileView,
   Typography as TypographyView,
   Icons as IconsView,
   Account as AccountView,
@@ -26,13 +27,13 @@ const Routes = () => {
         to="/my-drive"
       />
       <RouteWithLayout
-        component={FileListView}
+        component={MyDriveView}
         exact
         layout={MainLayout}
         path="/my-drive"
       />
       <RouteWithLayout
-        component={FileListView}
+        component={SharedFileView}
         exact
         layout={MainLayout}
         path="/share"

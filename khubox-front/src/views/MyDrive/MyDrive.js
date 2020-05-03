@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const FileList = () => {
+const MyDrive = () => {
   const classes = useStyles();
 
   const [files] = useState(mockData);
@@ -22,10 +22,10 @@ const FileList = () => {
     <div className={classes.root}>
       <DriveToolbar />
       <div className={classes.content}>
-        <FileTable users={files} />
+        <FileTable files={files} />
       </div>
     </div>
   );
 };
 
-export default FileList;
+export default MyDrive;

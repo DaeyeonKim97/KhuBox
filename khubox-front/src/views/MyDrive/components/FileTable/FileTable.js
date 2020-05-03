@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const FileTable = props => {
-  const { className, users: files, ...rest } = props;
+  const { className, files: files, ...rest } = props;
 
   const classes = useStyles();
 
@@ -51,12 +51,12 @@ const FileTable = props => {
   const [page, setPage] = useState(0);
 
   const handleSelectAll = event => {
-    const { users } = props;
+    const { files } = props;
 
     let selectedUsers;
 
     if (event.target.checked) {
-      selectedUsers = users.map(user => user.id);
+      selectedUsers = files.map(user => user.id);
     } else {
       selectedUsers = [];
     }
@@ -174,7 +174,7 @@ const FileTable = props => {
 
 FileTable.propTypes = {
   className: PropTypes.string,
-  users: PropTypes.array.isRequired
+  files: PropTypes.array.isRequired
 };
 
 export default FileTable;
