@@ -1,143 +1,34 @@
 import uuid from 'uuid/v1';
 
 export default [
-  {
-    id: uuid(),
-    name: 'Ekaterina Tankova',
-    address: {
-      country: 'USA',
-      state: 'West Virginia',
-      city: 'Parkersburg',
-      street: '2849 Fulton Street'
-    },
-    email: 'ekaterina.tankova@devias.io',
-    phone: '304-428-3097',
-    avatarUrl: '/images/avatars/avatar_3.png',
-    createdAt: 1555016400000
-  },
-  {
-    id: uuid(),
-    name: 'Cao Yu',
-    address: {
-      country: 'USA',
-      state: 'Bristow',
-      city: 'Iowa',
-      street: '1865  Pleasant Hill Road'
-    },
-    email: 'cao.yu@devias.io',
-    avatarUrl: '/images/avatars/avatar_4.png',
-    phone: '712-351-5711',
-    createdAt: 1555016400000
-  },
-  {
-    id: uuid(),
-    name: 'Alexa Richardson',
-    address: {
-      country: 'USA',
-      state: 'Georgia',
-      city: 'Atlanta',
-      street: '4894  Lakeland Park Drive'
-    },
-    email: 'alexa.richardson@devias.io',
-    phone: '770-635-2682',
-    avatarUrl: '/images/avatars/avatar_2.png',
-    createdAt: 1555016400000
-  },
-  {
-    id: uuid(),
-    name: 'Anje Keizer',
-    address: {
-      country: 'USA',
-      state: 'Ohio',
-      city: 'Dover',
-      street: '4158  Hedge Street'
-    },
-    email: 'anje.keizer@devias.io',
-    avatarUrl: '/images/avatars/avatar_5.png',
-    phone: '908-691-3242',
-    createdAt: 1554930000000
-  },
-  {
-    id: uuid(),
-    name: 'Clarke Gillebert',
-    address: {
-      country: 'USA',
-      state: 'Texas',
-      city: 'Dallas',
-      street: '75247'
-    },
-    email: 'clarke.gillebert@devias.io',
-    phone: '972-333-4106',
-    avatarUrl: '/images/avatars/avatar_6.png',
-    createdAt: 1554757200000
-  },
-  {
-    id: uuid(),
-    name: 'Adam Denisov',
-    address: {
-      country: 'USA',
-      state: 'California',
-      city: 'Bakerfield',
-      street: '317 Angus Road'
-    },
-    email: 'adam.denisov@devias.io',
-    phone: '858-602-3409',
-    avatarUrl: '/images/avatars/avatar_1.png',
-    createdAt: 1554670800000
-  },
-  {
-    id: uuid(),
-    name: 'Ava Gregoraci',
-    address: {
-      country: 'USA',
-      state: 'California',
-      city: 'Redondo Beach',
-      street: '2188  Armbrester Drive'
-    },
-    email: 'ava.gregoraci@devias.io',
-    avatarUrl: '/images/avatars/avatar_7.png',
-    phone: '415-907-2647',
-    createdAt: 1554325200000
-  },
-  {
-    id: uuid(),
-    name: 'Emilee Simchenko',
-    address: {
-      country: 'USA',
-      state: 'Nevada',
-      city: 'Las Vegas',
-      street: '1798  Hickory Ridge Drive'
-    },
-    email: 'emilee.simchenko@devias.io',
-    phone: '702-661-1654',
-    avatarUrl: '/images/avatars/avatar_8.png',
-    createdAt: 1523048400000
-  },
-  {
-    id: uuid(),
-    name: 'Kwak Seong-Min',
-    address: {
-      country: 'USA',
-      state: 'Michigan',
-      city: 'Detroit',
-      street: '3934  Wildrose Lane'
-    },
-    email: 'kwak.seong.min@devias.io',
-    avatarUrl: '/images/avatars/avatar_9.png',
-    phone: '313-812-8947'
-  },
-  {
-    id: uuid(),
-    name: 'Merrile Burgett',
-    address: {
-      country: 'USA',
-      state: 'Utah',
-      city: 'Salt Lake City',
-      street: '368 Lamberts Branch Road'
-    },
-    email: 'merrile.burgett@devias.io',
-    phone: '801-301-7894',
-    avatarUrl: '/images/avatars/avatar_10.png',
-    createdAt: 1522702800000
-  }
+  {id:1,name:"VelitEuEst.jpeg",modifiedAt:"2019-08-28",size:73,share:false},
+{id:2,name:"EstRisusAuctor.mp3",modifiedAt:"2019-11-03",size:34,share:true},
+{id:3,name:"NonLigula.pdf",modifiedAt:"2019-12-15",size:20,share:true},
+{id:4,name:"In.avi",modifiedAt:"2019-05-09",size:100,share:true},
+{id:5,name:"DiamEratFermentum.txt",modifiedAt:"2019-07-18",size:20,share:false},
+{id:6,name:"Amet.avi",modifiedAt:"2020-02-27",size:77,share:false},
+{id:7,name:"OrnareImperdietSapien.jpeg",modifiedAt:"2020-01-22",size:24,share:false},
+{id:8,name:"AugueLuctus.mp3",modifiedAt:"2020-03-22",size:50,share:true},
+{id:9,name:"TempusSemperEst.doc",modifiedAt:"2020-04-26",size:20,share:true},
+{id:10,name:"Pellentesque.avi",modifiedAt:"2020-03-31",size:7,share:true},
+{id:11,name:"Ante.mp3",modifiedAt:"2020-04-08",size:53,share:true},
+{id:12,name:"NamDui.mp3",modifiedAt:"2019-11-05",size:14,share:true},
+{id:13,name:"MagnaAc.xls",modifiedAt:"2020-01-04",size:92,share:true},
+{id:14,name:"Nam.mp3",modifiedAt:"2019-11-04",size:10,share:true},
+{id:15,name:"Vestibulum.avi",modifiedAt:"2019-07-02",size:62,share:true},
+{id:16,name:"VestibulumAnteIpsum.ppt",modifiedAt:"2020-03-17",size:67,share:true},
+{id:17,name:"Id.tiff",modifiedAt:"2019-05-15",size:72,share:true},
+{id:18,name:"NequeVestibulumEget.xls",modifiedAt:"2019-09-06",size:1,share:true},
+{id:19,name:"AdipiscingMolestieHendrerit.ppt",modifiedAt:"2019-05-25",size:87,share:true},
+{id:20,name:"Lacus.xls",modifiedAt:"2020-03-04",size:52,share:true},
+{id:21,name:"EgetElitSodales.xls",modifiedAt:"2019-05-19",size:95,share:false},
+{id:22,name:"PorttitorLacus.ppt",modifiedAt:"2019-11-01",size:89,share:false},
+{id:23,name:"Cubilia.mp3",modifiedAt:"2019-05-10",size:35,share:true},
+{id:24,name:"VenenatisNonSodales.xls",modifiedAt:"2019-10-29",size:22,share:true},
+{id:25,name:"JustoIn.ppt",modifiedAt:"2020-02-23",size:54,share:false},
+{id:26,name:"InFelis.ppt",modifiedAt:"2019-10-18",size:58,share:false},
+{id:27,name:"SitAmetEleifend.xls",modifiedAt:"2019-09-21",size:12,share:false},
+{id:28,name:"UtSuscipit.ppt",modifiedAt:"2019-05-17",size:83,share:false},
+{id:29,name:"UtDolor.pdf",modifiedAt:"2019-07-28",size:23,share:false},
+{id:30,name:"DuisBibendum.ppt",modifiedAt:"2019-09-06",size:48,share:true}
 ];

@@ -16,13 +16,13 @@ const useStyles = makeStyles(theme => ({
 const FileList = () => {
   const classes = useStyles();
 
-  const [users] = useState(mockData);
+  const [files] = useState(mockData);
 
   return (
     <div className={classes.root}>
       <DriveToolbar />
       <div className={classes.content}>
-        <FileTable users={users} />
+        <FileTable users={files} />
       </div>
     </div>
   );
