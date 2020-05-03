@@ -17,6 +17,9 @@ const useStyles = makeStyles(theme => ({
   spacer: {
     flexGrow: 1
   },
+  Button: {
+    marginRight: theme.spacing(1)
+  },
   importButton: {
     marginRight: theme.spacing(1)
   },
@@ -40,14 +43,24 @@ const DriveToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-        <Button className={classes.importButton}>새 폴더</Button>
-        <Button className={classes.exportButton}>폴더 업로드</Button>
+        <Button className={classes.Button}>새 폴더</Button>
+        <Button className={classes.Button}>폴더 업로드</Button>
         <Button
           color="primary"
           variant="contained"
         >
           파일 업로드
         </Button>
+      </div>
+      <div className={classes.row}>
+        {/* 파일 클릭했을 때 표시 */}
+        <span className={classes.spacer} />
+        <Button className={classes.Button}>공유</Button>
+        <Button className={classes.Button}>미리보기</Button>
+        <Button className={classes.Button}>삭제</Button>
+        <Button className={classes.Button}>이름 바꾸기</Button>
+        <Button className={classes.Button}>이동</Button>
+        <Button className={classes.Button}>다운로드</Button>
       </div>
       <div className={classes.row}>
         <SearchInput

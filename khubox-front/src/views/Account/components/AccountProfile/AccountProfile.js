@@ -40,11 +40,9 @@ const AccountProfile = props => {
   const classes = useStyles();
 
   const user = {
-    name: 'Shen Zhi',
-    city: 'Los Angeles',
-    country: 'USA',
-    timezone: 'GTM-7',
-    avatar: '/images/avatars/avatar_11.png'
+    name: '엄준식',
+    membership: 'Basic',
+    avatar: '/images/avatars/avatar_1.png'
   };
 
   return (
@@ -59,21 +57,13 @@ const AccountProfile = props => {
               gutterBottom
               variant="h2"
             >
-              John Doe
+              {user.name}
             </Typography>
             <Typography
-              className={classes.locationText}
               color="textSecondary"
               variant="body1"
             >
-              {user.city}, {user.country}
-            </Typography>
-            <Typography
-              className={classes.dateText}
-              color="textSecondary"
-              variant="body1"
-            >
-              {moment().format('hh:mm A')} ({user.timezone})
+              {user.membership + " Plan"}
             </Typography>
           </div>
           <Avatar
@@ -82,7 +72,7 @@ const AccountProfile = props => {
           />
         </div>
         <div className={classes.progress}>
-          <Typography variant="body1">Profile Completeness: 70%</Typography>
+          <Typography variant="body1">저장용량: 70% (7GB/10GB)</Typography>
           <LinearProgress
             value={70}
             variant="determinate"

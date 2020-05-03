@@ -38,6 +38,12 @@ const DriveToolbar = props => {
       {...rest}
       className={clsx(classes.root, className)}
     >
+       <div className={classes.row}>
+        {/* 파일 클릭했을 때 표시 */}
+        <span className={classes.spacer} />
+        <Button className={classes.Button}>복원</Button>
+        <Button className={classes.Button}>영구 삭제</Button>
+      </div>
       <div className={classes.row}>
         <SearchInput
           className={classes.searchInput}
