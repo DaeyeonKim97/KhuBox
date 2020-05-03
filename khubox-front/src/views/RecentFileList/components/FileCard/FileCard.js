@@ -39,8 +39,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductCard = props => {
-  const { className, product, ...rest } = props;
+const FileCard = props => {
+  const { className, file, ...rest } = props;
 
   const classes = useStyles();
 
@@ -51,10 +51,11 @@ const ProductCard = props => {
     >
       <CardContent>
         <div className={classes.imageContainer}>
+          {/* TODO: file.modifiedAt과 연동 */}
           <img
-            alt="Product"
+            alt="FileIcon"
             className={classes.image}
-            src={product.imageUrl}
+            src={file.imageUrl}
           />
         </div>
         <Typography
@@ -62,13 +63,7 @@ const ProductCard = props => {
           gutterBottom
           variant="h4"
         >
-          {product.title}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {product.description}
+          {file.name}
         </Typography>
       </CardContent>
       <Divider />
@@ -86,6 +81,7 @@ const ProductCard = props => {
               display="inline"
               variant="body2"
             >
+              {/* TODO: file.modifiedAt과 연동 */}
               Updated 2hr ago
             </Typography>
           </Grid>
@@ -93,13 +89,6 @@ const ProductCard = props => {
             className={classes.statsItem}
             item
           >
-            <GetAppIcon className={classes.statsIcon} />
-            <Typography
-              display="inline"
-              variant="body2"
-            >
-              {product.totalDownloads} Downloads
-            </Typography>
           </Grid>
         </Grid>
       </CardActions>
@@ -107,9 +96,9 @@ const ProductCard = props => {
   );
 };
 
-ProductCard.propTypes = {
+FileCard.propTypes = {
   className: PropTypes.string,
-  product: PropTypes.object.isRequired
+  file: PropTypes.object.isRequired
 };
 
-export default ProductCard;
+export default FileCard;
