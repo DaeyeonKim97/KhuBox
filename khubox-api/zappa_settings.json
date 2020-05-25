@@ -1,0 +1,15 @@
+{
+    "production": {
+        "aws_region": "ap-northeast-2",
+        "django_settings": "config.settings",
+        "profile_name": "default",
+        "project_name": "khubox-api",
+        "runtime": "python3.6",
+        "s3_bucket": "khubox-deploy",
+        "memory_size": 128,
+        "vpc_config": {
+            "SubnetIds": ["subnet-02d51e69"],
+            "SecurityGroupIds": ["sg-09c30d37d6a504f5c"]
+        }
+    }
+}
