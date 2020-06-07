@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'khubox-api.khunet.net']
 # Application definition
 
 INSTALLED_APPS = [
+    'khubox.apps.KhuboxConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
