@@ -36,5 +36,3 @@ Werkzeug==0.16.1
 wsgi-request-logger==0.4.6
 zappa==0.51.0
 zipp==3.1.0
-djangorestframework == 3.11.0
-django-rest-knox == 1.1.0
