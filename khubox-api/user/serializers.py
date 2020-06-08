@@ -64,5 +64,3 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 
         return instance
 
-class GroupSerializer (serializers.HyperlinkedModelSerializer):
-    class Meta

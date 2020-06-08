@@ -34,7 +34,6 @@ class UserManager(BaseUserManager):
             date_of_birth=date_of_birth,
             name= "True",
         )
-        #user.is_staff = True
         user.is_admin = True
         user.save(using=self._db)
         return user
