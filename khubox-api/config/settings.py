@@ -81,6 +81,9 @@ DATABASES = {
         'PASSWORD': '8f13dd391805db193227d3544b570b69',
         'HOST': 'khubox.cogff6stbbkv.ap-northeast-2.rds.amazonaws.com',
         'PORT': '3306',
+        'OPTIONS': {
+        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 
