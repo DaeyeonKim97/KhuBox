@@ -70,7 +70,34 @@ def create(request):
 
 # TODO: 휴지통 비우기
 def empty_trash(request):
-    return {'result': True}
+    # TODO: Auth
+    request.user_id = 1
+
+    # Query Files
+    files = File.objects.filter(owner_user_id=request.user_id, is_trahsed=1, deleted_at__isnull=True)
+
+    # First Depth
+    del_list = []
+    del_check = []
+    for del_file in files:
+        del_check.append(del_file.id)
+
+    # Child Depth
+    while True:
+        if not del_check:
+            break
+        child_files = File.objects.filter(parent_id__in=del_check)
+        del_list.extend(del_check)
+        del_check.clear()
+        for del_file in child_files:
+            del_check.append(del_file.id)
+
+    # TODO: S3 Delete
+
+    # Update
+    File.objects.filter(id__in=del_list).update(is_trahsed=1, deleted_at=timezone.now())
+
+    return {'result': True, 'affected': del_list}
 
 
 # TODO: 폴더/파일 조회, 파일 다운로드
