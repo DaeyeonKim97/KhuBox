@@ -48,8 +48,7 @@ class User(AbstractBaseUser):
     name = models.CharField(max_length=100)
     date_of_birth = models.DateField(default=datetime.date.today)
     storage_usage = models.FloatField( default = 0)
-    profile = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=None)
-    
+
     is_admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
