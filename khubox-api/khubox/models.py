@@ -12,7 +12,7 @@ class File(models.Model):
     size = models.BigIntegerField()
     is_public = models.IntegerField(default=0)
     is_starred = models.IntegerField(default=0)
-    is_trahsed = models.IntegerField(default=0)
+    is_trashed = models.IntegerField(default=0)
     created_at = models.DateTimeField()
     deleted_at = models.DateTimeField(blank=True, null=True)
 

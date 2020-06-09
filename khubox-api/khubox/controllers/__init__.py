@@ -5,7 +5,7 @@ from . import files, groups, users
 urlpatterns = [
     url(r'^files$', files.index),  # 폴더 생성, 파일 업로드, 폴더/파일 목록
     url(r'^files/trash$', files.trash),  # 휴지통 비우기
-    url(r'^files/(?P<file_id>[-\w]+)$', files.item),  # 폴더/파일 조회, 파일 다운로드, 폴더/파일 수정
+    url(r'^files/(?P<file_id>[-\w]+)$', files.item),  # 폴더/파일 조회, 폴더/파일 수정
     url(r'^files/(?P<file_id>[-\w]+)/copy$', files.copy),  # 파일 복제
     url(r'^groups$', groups.index),  # 그룹 생성
     url(r'^groups/invite/(?P<invite_code>[-\w]+)$', groups.invite),  # 그룹 초대장 조회, 그룹 초대장 사용

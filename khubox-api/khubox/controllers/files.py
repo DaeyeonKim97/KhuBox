@@ -20,7 +20,7 @@ def trash(request):
 
 
 def item(request, file_id):
-    # 폴더/파일 조회, 파일 다운로드
+    # 폴더/파일 조회
     if request.method == 'GET':
         return JsonResponse(files.find_item(request, file_id))
     # 폴더/파일 수정
