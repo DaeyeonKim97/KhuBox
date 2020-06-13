@@ -1,5 +1,7 @@
 import json
+import jwt
 import uuid
+from django.conf import settings
 from django.contrib.auth.hashers import make_password, check_password
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -63,7 +65,32 @@ def create(request):
 
 # 로그인
 def login(request):
-    return {'result': True}
+    # Load
+    try:
+        received = json.loads(request.body.decode('utf-8'))
+    except json.decoder.JSONDecodeError:
+        return {'result': False, 'error': '입력이 잘못되었습니다.'}
+
+    # Validate
+    if 'email' not in received \
+            or 'password' not in received:
+        return {'result': False, 'error': '입력이 누락되었습니다.'}
+
+    # Select
+    user = User.objects.filter(email=received['email'])
+
+    # Not Exists
+    if len(user) != 1:
+        return {'result': False, 'error': '로그인에 실패하였습니다.'}
+
+    # Check
+    if check_password(received['password'], user[0].password) is False:
+        return {'result': False, 'error': '로그인에 실패하였습니다.'}
+
+    # Token Generate
+    token = jwt.encode({'id': user[0].id}, key=settings.SECRET_KEY, algorithm='HS256')
+
+    return {'result': True, 'token': token.decode('utf-8')}
 
 
 # 회원정보 조회
