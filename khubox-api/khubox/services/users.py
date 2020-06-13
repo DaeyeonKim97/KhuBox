@@ -53,7 +53,7 @@ def create(request):
         created_at=timezone.now()
     )
     File.objects.create(
-        id=uuid.uuid4(),
+        id=root_folder,
         owner_user_id=user.id,
         type='folder',
         name='user_%s' % user.id,
@@ -113,7 +113,7 @@ def find_me(request):
         'email': user[0].email,
         'name': user[0].name,
         'root_folder': user[0].root_folder,
-        'created_at': str(user[0].created_at)
+        'created_at': user[0].created_at
     }
 
     return {'result': True, 'data': data}
