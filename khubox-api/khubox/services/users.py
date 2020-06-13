@@ -95,7 +95,26 @@ def login(request):
 
 # 회원정보 조회
 def find_me(request):
-    return {'result': True}
+    # TODO: Auth
+    request.user_id = 1
+
+    # Query
+    user = User.objects.filter(id=request.user_id)
+
+    # Check Exists
+    if len(user) != 1:
+        return {'result': False, 'error': '잘못된 요청입니다.'}
+
+    # Serialize
+    data = {
+        'id': user[0].id,
+        'email': user[0].email,
+        'name': user[0].name,
+        'root_folder': user[0].root_folder,
+        'created_at': str(user[0].created_at)
+    }
+
+    return {'result': True, 'data': data}
 
 
 # 회원정보 수정
