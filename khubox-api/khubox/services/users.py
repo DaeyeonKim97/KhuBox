@@ -1,3 +1,4 @@
+import datetime
 import json
 import jwt
 import uuid
@@ -88,7 +89,8 @@ def login(request):
         return {'result': False, 'error': '로그인에 실패하였습니다.'}
 
     # Token Generate
-    token = jwt.encode({'id': user[0].id}, key=settings.SECRET_KEY, algorithm='HS256')
+    token = jwt.encode({'id': user[0].id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=6)},
+                       key=settings.SECRET_KEY, algorithm='HS256')
 
     return {'result': True, 'token': token.decode('utf-8')}
 
@@ -119,4 +121,40 @@ def find_me(request):
 
 # 회원정보 수정
 def update_me(request):
+    # TODO: Auth
+    request.user_id = 1
+
+    # Load
+    try:
+        received = json.loads(request.body.decode('utf-8'))
+    except json.decoder.JSONDecodeError:
+        return {'result': False, 'error': '입력이 잘못되었습니다.'}
+
+    # Validate
+    if 'name' not in received \
+            and ('old_password' not in received and 'password' not in received):
+        return {'result': False, 'error': '입력이 누락되었습니다.'}
+
+    # Query
+    user = User.objects.filter(id=request.user_id)
+
+    # Check Exists
+    if len(user) != 1:
+        return {'result': False, 'error': '잘못된 요청입니다.'}
+
+    # Change Name
+    if 'name' in received:
+        user[0].name = received['name']
+
+    # Change Password
+    if 'old_password' in received and 'password' in received:
+        if check_password(received['old_password'], user[0].password) is False:
+            return {'result': False, 'error': '이전 비밀번호가 잘못되었습니다.'}
+        if len(received['password']) < 8:
+            return {'result': False, 'error': '비밀번호는 최소 8글자 입니다.'}
+        user[0].password = make_password(received['password'])
+
+    # Save
+    user[0].save()
+
     return {'result': True}
