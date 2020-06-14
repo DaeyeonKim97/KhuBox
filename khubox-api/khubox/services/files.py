@@ -271,6 +271,8 @@ def update_item(request, file_id):
 
     # Update
     if 'name' in received:
+        if received['name'] == '':
+            return {'result': False, 'error': '이름을 제대로 입력해주세요.'}
         file[0].name = received['name']
     if 'parent_id' in received:
         file[0].parent_id = received['parent_id']

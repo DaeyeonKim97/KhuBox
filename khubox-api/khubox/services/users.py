@@ -148,6 +148,8 @@ def update_me(request):
 
     # Change Name
     if 'name' in received:
+        if len(received['name']) == 0:
+            return {'result': False, 'error': '이름을 제대로 입력해주세요.'}
         user[0].name = received['name']
 
     # Change Password
