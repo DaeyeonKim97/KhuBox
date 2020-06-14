@@ -1,21 +1,22 @@
 import json
 import uuid
-from django.conf import settings
 from django.utils import timezone
-from ..aws import sign_upload, sign_download, s3_copy, s3_delete
+from pathvalidate import sanitize_filename
+from ..aws import sign_upload, sign_download, s3_copy, s3_delete, s3_update_and_return_size
 from ..models import File, GroupUser
 
 
 # 폴더/파일 목록
 def list_item(request):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Validate
     if request.GET.get('is_public') != 'true' \
             and request.GET.get('is_starred') != 'true' \
             and request.GET.get('is_trashed') != 'true':
-        return {'result': False, 'error': '입력이 누락되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Query Files
     files = None
@@ -26,7 +27,7 @@ def list_item(request):
     elif request.GET.get('is_trashed') == 'true':
         files = File.objects.filter(owner_user_id=request.user_id, is_trashed=1, deleted_at__isnull=True)
 
-    # Structure
+    # Serialize
     data = []
     for file in files:
         data.append({
@@ -45,23 +46,24 @@ def list_item(request):
 
 # 폴더 생성, 파일 업로드
 def create(request):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Load
     try:
         received = json.loads(request.body.decode('utf-8'))
     except json.decoder.JSONDecodeError:
-        return {'result': False, 'error': '입력이 잘못되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Validate
     if 'parent_id' not in received \
             or 'type' not in received \
             or 'name' not in received:
-        return {'result': False, 'error': '입력이 누락되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
     if (received['type'] != 'folder' and received['type'] != 'file') \
             or received['name'] == '':
-        return {'result': False, 'error': '입력이 잘못되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Get Parent
     parent = File.objects.filter(id=received['parent_id'], is_trashed=0, deleted_at__isnull=True)
@@ -89,7 +91,7 @@ def create(request):
         owner_group_id=parent[0].owner_group_id,
         uploader_id=request.user_id,
         type=received['type'],
-        name=received['name'],
+        name=sanitize_filename(received['name']),
         size=0,
         created_at=timezone.now()
     )
@@ -105,8 +107,9 @@ def create(request):
 
 # 휴지통 비우기
 def empty_trash(request):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Query Files
     files = File.objects.filter(owner_user_id=request.user_id, is_trashed=1, deleted_at__isnull=True)
@@ -138,8 +141,9 @@ def empty_trash(request):
 
 # 폴더/파일 조회
 def find_item(request, file_id):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Query
     file = File.objects.filter(id=file_id, deleted_at__isnull=True)
@@ -174,12 +178,10 @@ def find_item(request, file_id):
 
     # Return File
     if file[0].type == 'file':
-        download_url = '%s/%s' % (settings.CDN_PATH, file[0].id)
-        download_url = sign_download(download_url)
+        download_url = sign_download(file[0].id)
         data = {
             'id': file[0].id,
             'parent_id': file[0].parent_id,
-            'uploader_id': file[0].uploader_id,
             'name': file[0].name,
             'size': file[0].size,
             'is_public': file[0].is_public,
@@ -213,14 +215,15 @@ def find_item(request, file_id):
 
 # 폴더/파일 수정
 def update_item(request, file_id):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Load
     try:
         received = json.loads(request.body.decode('utf-8'))
     except json.decoder.JSONDecodeError:
-        return {'result': False, 'error': '입력이 잘못되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Validate
     if 'name' not in received \
@@ -228,7 +231,7 @@ def update_item(request, file_id):
             and 'is_public' not in received \
             and 'is_starred' not in received \
             and 'is_trashed' not in received:
-        return {'result': False, 'error': '입력이 누락되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Query
     file = File.objects.filter(id=file_id, deleted_at__isnull=True)
@@ -267,7 +270,10 @@ def update_item(request, file_id):
 
     # Update
     if 'name' in received:
-        file[0].name = received['name']
+        if received['name'] == '':
+            return {'result': False, 'error': '이름을 제대로 입력해주세요.'}
+        file[0].name = sanitize_filename(received['name'])
+        s3_update_and_return_size(file_id, file[0].name)
     if 'parent_id' in received:
         file[0].parent_id = received['parent_id']
     if 'is_public' in received:
@@ -285,8 +291,9 @@ def update_item(request, file_id):
 
 # 파일 복제
 def copy(request, file_id):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Get File
     file = File.objects.filter(id=file_id, type='file', is_trashed=0, deleted_at__isnull=True)

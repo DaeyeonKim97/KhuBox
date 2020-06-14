@@ -1,25 +1,15 @@
 import boto3
-import datetime
-from botocore.signers import CloudFrontSigner
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes, serialization
-from cryptography.hazmat.primitives.asymmetric import padding
 from django.conf import settings
 
 
-def rsa_signer(message):
-    private_key = serialization.load_pem_private_key(
-        settings.CLOUDFRONT_KEY_PRIVATE.encode('ascii'),
-        password=None,
-        backend=default_backend()
+def sign_download(file_id):
+    s3 = boto3.client('s3')
+    signed_url = s3.generate_presigned_url(
+        'get_object',
+        Params={'Bucket': settings.S3_BUCKET, 'Key': file_id},
+        ExpiresIn=3600,
+        HttpMethod='GET'
     )
-    return private_key.sign(message, padding.PKCS1v15(), hashes.SHA1())
-
-
-def sign_download(url):
-    expire_date = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
-    cloudfront_signer = CloudFrontSigner(settings.CLOUDFRONT_KEY_ID, rsa_signer)
-    signed_url = cloudfront_signer.generate_presigned_url(url, date_less_than=expire_date)
     return signed_url
 
 
@@ -52,3 +42,13 @@ def s3_copy(file_id, new_file_id):
     }
     obj = bucket.Object(str(new_file_id))
     obj.copy(copy_source)
+
+
+def s3_update_and_return_size(file_id, name):
+    s3 = boto3.resource('s3')
+    s3_object = s3.Object(settings.S3_BUCKET, file_id)
+    s3_object.copy_from(CopySource={'Bucket': settings.S3_BUCKET, 'Key': file_id},
+                        ContentType='application/octet-stream',
+                        ContentDisposition='attachment; filename=%s' % name,
+                        MetadataDirective='REPLACE')
+    return s3_object.content_length

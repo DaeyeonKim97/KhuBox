@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'wfs076redt^-5_*dw6!_dqz*2z!a_#()33y@r_q7&+4r_40h9$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'khubox-api.khunet.net']
 
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'khubox.middlewares.auth.AuthMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -128,9 +129,6 @@ STATIC_URL = '/static/'
 
 # Custom Settings
 S3_BUCKET = 'khubox-files'
-CDN_PATH = 'https://khubox-files.khunet.net'
-CLOUDFRONT_KEY_ID = 'APKAJ3FOBWI34OZJTXJQ'
-CLOUDFRONT_KEY_PRIVATE = '-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA18VtzURs+fQev5L00LRwRbJaObQI4kfJCIsOE7eWSOqq4Akh\nA7fI6vs3z8orXBvgc+k6GgAHrIdNwckxoQuTsCxrTDm1104qy1T4JkVxkIBYHJgH\nGzKUloK5IqdmcYbOK7IQeHJ2gR9Mv/3oKUytJSsrbM9k4oLrsxGpyEuJeHIg28aP\nwhoVWmBGcPu48l4aYAZEVY7LZRJSOQ9y7Lf8FS1u7Xtw1P91gEaqrqVXqRWY02C8\nsixpJJuiAPnM3rpcpVNlAaPdDkWmaWYJoJDOlce7Dmx1a9Ckr24krM//vpEljurC\nGml0AsHpL8LE9msM5VA+miCxCz/K+wDgm2xvvQIDAQABAoIBAFmP3pLceyuJVBYK\n5smWjB+x91eKTkG2sFB2f8JZau0bUxApWeXULHa1DiaW8UaLX7BdN7vBFW5cvz7X\nx1zklEoFNghuz/btwD+kJlikbI4hZ/F+fTyh0yFiY3xp5dDrtrpWcBW+1UeleVMc\nDnjOFfSepajFsUeANlue0k2MZSRz34s2T2scV5ZkooqdXddYUF/wDhefYm6uvCgI\nPyvY/mbJTyhte/xagY/m6yzk5gxgad0qP2ZZrHhLLMlJ/GEZToWDxD2xUei61NQT\nFFc5ZutkAE6fVb3I4SJUBSX5fl0tTMz4Aak1GP2phMhjZyjYnQMq8kvL4BNFb7gp\nary8W/UCgYEA+eKkfjjlPsEx6yHMhD7pAwy/MpUqJmF5LMxIG+qfd+GZMQ2oucn5\npUAwBHP7BD6E9H7/7jdjnCiO+iPrzM9vNLfqsdCtPWzoFYJp/6Fv002uX8seNYvJ\nQyQqrM85LYIghhnkcmJMA8GR/Iu5ZEeE2BkAl9T2EKclzmB62d/ki6MCgYEA3Q0V\nz08IEwSJW+jEsOM+XGg2YkNqCVKGQD9n4CPx0TFVJxfqFl2nVwlN2hfrlJLUQ9+l\nfXnS5AW3tE88t9we+ea0saJZEqqlm/rGsfTV/twS9cWSgvG5fTzhUbu9/ElMU29L\nmydQfWTvCup7zCuQtgwM5ZRtPwuKsI8urUg6zR8CgYAt0coZvvMCI8i0dbkbkrGF\nNqQkcUeOTBc9CKQ8QjRFdh9x6DBFCOz2ySNE3cNsTs5wSo1BL/Ta4HD/GvEU2ABr\nKUImor3xYnPX5dbr4b0wgLD1rbf3V49q+Um98C1q086E6GCEPNP1aFwNc81lvtt0\nCHmcXZdVDGEZS4WbR7uPgwKBgBO/moY12lPQoPDsH75p3uVkjg9DVJLWo5XT1FTr\nASyeSqw+b7Rl05BsDV+BqZNRdtNFhMRsANJMTHg4aAVJDh9nZBdGmMyZIEiKI/w8\nEm49fRgl+YvnSpoMuViS/EswxTfjBo8q+P7q6IxCHKNF9Ry+gNx14TizsEVL1XC3\ntkEjAoGBAMyp7wdPobJMXcclRVq6rqHs9OMcnZAveVKyxNgDbZu4OB5X4xTxGEYT\nNZQ0MFf/HcwlnH7797gVQeqF9dlqUJYe+Fc8lc/Rcwta/4R5uMgri9t8RKN91YKF\nUUFBsDEkWlkoAmfPkcrrq9cLJlmSNt3ehQj4p5iAJwoVBXXa++PO\n-----END RSA PRIVATE KEY-----'
 
 
 # Cors

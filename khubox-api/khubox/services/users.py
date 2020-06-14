@@ -16,32 +16,34 @@ def create(request):
     try:
         received = json.loads(request.body.decode('utf-8'))
     except json.decoder.JSONDecodeError:
-        return {'result': False, 'error': '입력이 잘못되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Validate
     if 'email' not in received \
             or 'password' not in received \
             or 'name' not in received:
-        return {'result': False, 'error': '입력이 누락되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Validate Email
     try:
         validate_email(received['email'])
     except ValidationError:
-        return {'result': False, 'error': '이메일 형식이 잘못되었습니다.'}
+        return {'result': False, 'error': '이메일을 제대로 입력해주세요.'}
 
     # Validate Password
     if len(received['password']) < 8:
-        return {'result': False, 'error': '비밀번호는 최소 8글자 입니다.'}
+        return {'result': False, 'error': '비밀번호를 8자리 이상으로 입력해주세요.'}
 
     # Validate Name
     if len(received['name']) > 50:
         return {'result': False, 'error': '이름은 최대 50글자 입니다.'}
+    elif len(received['name']) == 0:
+        return {'result': False, 'error': '이름을 제대로 입력해주세요.'}
 
     # Check Duplicates
     is_exists = User.objects.filter(email=received['email'])
     if len(is_exists) > 0:
-        return {'result': False, 'error': '이미 사용중인 이메일 주소 입니다.'}
+        return {'result': False, 'error': '이미 사용 중인 이메일입니다.'}
 
     # Insert
     root_folder = uuid.uuid4()
@@ -70,21 +72,21 @@ def login(request):
     try:
         received = json.loads(request.body.decode('utf-8'))
     except json.decoder.JSONDecodeError:
-        return {'result': False, 'error': '입력이 잘못되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Validate
     if 'email' not in received \
             or 'password' not in received:
-        return {'result': False, 'error': '입력이 누락되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
-    # Select
+    # Query
     user = User.objects.filter(email=received['email'])
 
-    # Not Exists
+    # Check Exists
     if len(user) != 1:
         return {'result': False, 'error': '로그인에 실패하였습니다.'}
 
-    # Check
+    # Check Password
     if check_password(received['password'], user[0].password) is False:
         return {'result': False, 'error': '로그인에 실패하였습니다.'}
 
@@ -97,8 +99,9 @@ def login(request):
 
 # 회원정보 조회
 def find_me(request):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Query
     user = User.objects.filter(id=request.user_id)
@@ -121,19 +124,20 @@ def find_me(request):
 
 # 회원정보 수정
 def update_me(request):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Load
     try:
         received = json.loads(request.body.decode('utf-8'))
     except json.decoder.JSONDecodeError:
-        return {'result': False, 'error': '입력이 잘못되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Validate
     if 'name' not in received \
             and ('old_password' not in received and 'password' not in received):
-        return {'result': False, 'error': '입력이 누락되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Query
     user = User.objects.filter(id=request.user_id)
@@ -144,14 +148,16 @@ def update_me(request):
 
     # Change Name
     if 'name' in received:
+        if len(received['name']) == 0:
+            return {'result': False, 'error': '이름을 제대로 입력해주세요.'}
         user[0].name = received['name']
 
     # Change Password
     if 'old_password' in received and 'password' in received:
         if check_password(received['old_password'], user[0].password) is False:
-            return {'result': False, 'error': '이전 비밀번호가 잘못되었습니다.'}
+            return {'result': False, 'error': '이전 비밀번호를 제대로 입력해주세요.'}
         if len(received['password']) < 8:
-            return {'result': False, 'error': '비밀번호는 최소 8글자 입니다.'}
+            return {'result': False, 'error': '비밀번호를 8자리 이상으로 입력해주세요.'}
         user[0].password = make_password(received['password'])
 
     # Save
