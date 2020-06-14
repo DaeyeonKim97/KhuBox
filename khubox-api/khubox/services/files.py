@@ -1,8 +1,8 @@
 import json
 import uuid
-from django.conf import settings
 from django.utils import timezone
-from ..aws import sign_upload, sign_download, s3_copy, s3_delete
+from pathvalidate import sanitize_filename
+from ..aws import sign_upload, sign_download, s3_copy, s3_delete, s3_update_and_return_size
 from ..models import File, GroupUser
 
 
@@ -91,7 +91,7 @@ def create(request):
         owner_group_id=parent[0].owner_group_id,
         uploader_id=request.user_id,
         type=received['type'],
-        name=received['name'],
+        name=sanitize_filename(received['name']),
         size=0,
         created_at=timezone.now()
     )
@@ -178,8 +178,7 @@ def find_item(request, file_id):
 
     # Return File
     if file[0].type == 'file':
-        download_url = '%s/%s' % (settings.CDN_PATH, file[0].id)
-        download_url = sign_download(download_url)
+        download_url = sign_download(file[0].id)
         data = {
             'id': file[0].id,
             'parent_id': file[0].parent_id,
@@ -273,7 +272,8 @@ def update_item(request, file_id):
     if 'name' in received:
         if received['name'] == '':
             return {'result': False, 'error': '이름을 제대로 입력해주세요.'}
-        file[0].name = received['name']
+        file[0].name = sanitize_filename(received['name'])
+        s3_update_and_return_size(file_id, file[0].name)
     if 'parent_id' in received:
         file[0].parent_id = received['parent_id']
     if 'is_public' in received:
