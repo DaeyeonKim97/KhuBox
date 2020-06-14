@@ -10,13 +10,13 @@ from ..models import File, GroupUser
 def list_item(request):
     # Check Login
     if request.user_id is None:
-        return {'result': False, 'error': '권한이 없습니다.'}
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Validate
     if request.GET.get('is_public') != 'true' \
             and request.GET.get('is_starred') != 'true' \
             and request.GET.get('is_trashed') != 'true':
-        return {'result': False, 'error': '입력이 누락되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Query Files
     files = None
@@ -27,7 +27,7 @@ def list_item(request):
     elif request.GET.get('is_trashed') == 'true':
         files = File.objects.filter(owner_user_id=request.user_id, is_trashed=1, deleted_at__isnull=True)
 
-    # Structure
+    # Serialize
     data = []
     for file in files:
         data.append({
@@ -48,22 +48,22 @@ def list_item(request):
 def create(request):
     # Check Login
     if request.user_id is None:
-        return {'result': False, 'error': '권한이 없습니다.'}
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Load
     try:
         received = json.loads(request.body.decode('utf-8'))
     except json.decoder.JSONDecodeError:
-        return {'result': False, 'error': '입력이 잘못되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Validate
     if 'parent_id' not in received \
             or 'type' not in received \
             or 'name' not in received:
-        return {'result': False, 'error': '입력이 누락되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
     if (received['type'] != 'folder' and received['type'] != 'file') \
             or received['name'] == '':
-        return {'result': False, 'error': '입력이 잘못되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Get Parent
     parent = File.objects.filter(id=received['parent_id'], is_trashed=0, deleted_at__isnull=True)
@@ -109,7 +109,7 @@ def create(request):
 def empty_trash(request):
     # Check Login
     if request.user_id is None:
-        return {'result': False, 'error': '권한이 없습니다.'}
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Query Files
     files = File.objects.filter(owner_user_id=request.user_id, is_trashed=1, deleted_at__isnull=True)
@@ -143,7 +143,7 @@ def empty_trash(request):
 def find_item(request, file_id):
     # Check Login
     if request.user_id is None:
-        return {'result': False, 'error': '권한이 없습니다.'}
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Query
     file = File.objects.filter(id=file_id, deleted_at__isnull=True)
@@ -183,7 +183,6 @@ def find_item(request, file_id):
         data = {
             'id': file[0].id,
             'parent_id': file[0].parent_id,
-            'uploader_id': file[0].uploader_id,
             'name': file[0].name,
             'size': file[0].size,
             'is_public': file[0].is_public,
@@ -219,13 +218,13 @@ def find_item(request, file_id):
 def update_item(request, file_id):
     # Check Login
     if request.user_id is None:
-        return {'result': False, 'error': '권한이 없습니다.'}
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Load
     try:
         received = json.loads(request.body.decode('utf-8'))
     except json.decoder.JSONDecodeError:
-        return {'result': False, 'error': '입력이 잘못되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Validate
     if 'name' not in received \
@@ -233,7 +232,7 @@ def update_item(request, file_id):
             and 'is_public' not in received \
             and 'is_starred' not in received \
             and 'is_trashed' not in received:
-        return {'result': False, 'error': '입력이 누락되었습니다.'}
+        return {'result': False, 'error': '잘못된 요청입니다.'}
 
     # Query
     file = File.objects.filter(id=file_id, deleted_at__isnull=True)
@@ -292,7 +291,7 @@ def update_item(request, file_id):
 def copy(request, file_id):
     # Check Login
     if request.user_id is None:
-        return {'result': False, 'error': '권한이 없습니다.'}
+        return {'result': False, 'error': '로그인을 해주세요.'}
 
     # Get File
     file = File.objects.filter(id=file_id, type='file', is_trashed=0, deleted_at__isnull=True)
