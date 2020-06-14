@@ -7,8 +7,9 @@ from ..models import File, Group, GroupUser, User
 
 # 그룹 생성
 def create(request):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Load
     try:
@@ -49,8 +50,9 @@ def create(request):
 
 # 그룹 초대장 조회
 def find_invite(request, invite_code):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Query
     group = Group.objects.filter(invite_code=invite_code)
@@ -77,8 +79,9 @@ def find_invite(request, invite_code):
 
 # 그룹 초대장 사용
 def use_invite(request, invite_code):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Query
     group = Group.objects.filter(invite_code=invite_code)
@@ -104,8 +107,9 @@ def use_invite(request, invite_code):
 
 # 그룹 목록
 def list_me(request):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Query
     joined = GroupUser.objects.filter(user_id=request.user_id).values_list('group_id', flat=True)
@@ -125,8 +129,9 @@ def list_me(request):
 
 # 그룹 조회
 def find_item(request, group_id):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Check Joined
     joined = GroupUser.objects.filter(group_id=group_id, user_id=request.user_id)
@@ -167,8 +172,9 @@ def find_item(request, group_id):
 
 # 그룹 수정
 def update_item(request, group_id):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Load
     try:
@@ -200,8 +206,9 @@ def update_item(request, group_id):
 
 # 그룹 삭제
 def delete_item(request, group_id):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Query
     group = Group.objects.filter(id=group_id)
@@ -228,8 +235,9 @@ def delete_item(request, group_id):
 
 # 그룹 사용자 삭제
 def remove_user(request, group_id, user_id):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Query
     group = Group.objects.filter(id=group_id)

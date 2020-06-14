@@ -97,8 +97,9 @@ def login(request):
 
 # 회원정보 조회
 def find_me(request):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Query
     user = User.objects.filter(id=request.user_id)
@@ -121,8 +122,9 @@ def find_me(request):
 
 # 회원정보 수정
 def update_me(request):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Load
     try:

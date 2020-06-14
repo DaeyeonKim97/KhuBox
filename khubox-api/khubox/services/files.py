@@ -8,8 +8,9 @@ from ..models import File, GroupUser
 
 # 폴더/파일 목록
 def list_item(request):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Validate
     if request.GET.get('is_public') != 'true' \
@@ -45,8 +46,9 @@ def list_item(request):
 
 # 폴더 생성, 파일 업로드
 def create(request):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Load
     try:
@@ -105,8 +107,9 @@ def create(request):
 
 # 휴지통 비우기
 def empty_trash(request):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Query Files
     files = File.objects.filter(owner_user_id=request.user_id, is_trashed=1, deleted_at__isnull=True)
@@ -138,8 +141,9 @@ def empty_trash(request):
 
 # 폴더/파일 조회
 def find_item(request, file_id):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Query
     file = File.objects.filter(id=file_id, deleted_at__isnull=True)
@@ -213,8 +217,9 @@ def find_item(request, file_id):
 
 # 폴더/파일 수정
 def update_item(request, file_id):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Load
     try:
@@ -285,8 +290,9 @@ def update_item(request, file_id):
 
 # 파일 복제
 def copy(request, file_id):
-    # TODO: Auth
-    request.user_id = 1
+    # Check Login
+    if request.user_id is None:
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Get File
     file = File.objects.filter(id=file_id, type='file', is_trashed=0, deleted_at__isnull=True)
