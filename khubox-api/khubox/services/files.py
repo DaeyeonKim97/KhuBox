@@ -196,9 +196,19 @@ def find_item(request, file_id):
     files = File.objects.filter(parent_id=file[0].id, is_trashed=0, deleted_at__isnull=True)
 
     # Structure
-    data = []
+    data = {
+        'id': file[0].id,
+        'parent_id': file[0].parent_id,
+        'name': file[0].name,
+        'size': file[0].size,
+        'is_public': file[0].is_public,
+        'is_starred': file[0].is_starred,
+        'is_trashed': file[0].is_trashed,
+        'created_at': file[0].created_at,
+    }
+    file_list = []
     for file in files:
-        data.append({
+        file_list.append({
             'id': file.id,
             'type': file.type,
             'name': file.name,
@@ -210,7 +220,7 @@ def find_item(request, file_id):
         })
 
     # Return Folder
-    return {'result': True, 'data': data}
+    return {'result': True, 'data': data, 'files': file_list}
 
 
 # 폴더/파일 수정
