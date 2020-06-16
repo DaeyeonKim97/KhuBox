@@ -273,7 +273,8 @@ def update_item(request, file_id):
         if received['name'] == '':
             return {'result': False, 'error': '이름을 제대로 입력해주세요.'}
         file[0].name = sanitize_filename(received['name'])
-        s3_update_and_return_size(file_id, file[0].name)
+        if file[0].type == 'file':
+            s3_update_and_return_size(file_id, file[0].name)
     if 'parent_id' in received:
         file[0].parent_id = received['parent_id']
     if 'is_public' in received:
