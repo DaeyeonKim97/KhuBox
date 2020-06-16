@@ -118,6 +118,7 @@ def list_me(request):
     data = []
     for group in groups:
         data.append({
+            'id': group.id,
             'name': group.name,
             'root_folder': group.root_folder,
         })
@@ -145,6 +146,7 @@ def find_item(request, group_id):
 
     # Serialize
     data = {
+        'id': group[0].id,
         'name': group[0].name,
         'root_folder': group[0].root_folder,
     }
@@ -159,7 +161,6 @@ def find_item(request, group_id):
                 'id': user.id,
                 'name': user.name,
             })
-        data['id'] = group[0].id
         data['users'] = user_data
         data['invite_code'] = group[0].invite_code
         data['is_owner'] = True
