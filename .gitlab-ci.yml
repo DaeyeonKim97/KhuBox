@@ -1,6 +1,5 @@
 stages:
-  - deploy:backend
-  - deploy:frontend
+  - deploy
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
@@ -9,9 +8,9 @@ cache:
   paths:
     - "$CI_PROJECT_DIR/.cache"
 
-deploy:backend:
+deploy:
   image: python:3.6.5
-  stage: deploy:backend
+  stage: deploy
   cache:
     paths:
       - "$CI_PROJECT_DIR/khubox-api/venv"
@@ -27,22 +26,6 @@ deploy:backend:
     - source venv/bin/activate
     - pip install -r requirements.txt
     - zappa update
-
-deploy:frontend:
-  image: nikolaik/python-nodejs:python3.6-nodejs12-alpine
-  stage: deploy:frontend
-  cache:
-    paths:
-      - "$CI_PROJECT_DIR/.yarn"
-      - "$CI_PROJECT_DIR/khubox-front/node_modules"
-  script:
     - cd $CI_PROJECT_DIR/khubox-front
-    - yarn config set cache-folder $CI_PROJECT_DIR/.yarn
-    - yarn install
-    - CI=false yarn build
-    - pip install awscli
-    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-    - aws configure set region $AWS_DEFAULT_REGION
-    - aws s3 cp ./build/ s3://khubox-deploy/ --recursive --include "*" --acl public-read
+    - aws s3 cp ./ s3://khubox-deploy/ --recursive --include "*" --acl public-read
     - aws cloudfront create-invalidation --distribution-id E1RC3LPJHL5VUA --paths "/*"
