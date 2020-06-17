@@ -14,12 +14,12 @@
             data-target="#sidebarMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <input class="form-control form-control-dark w-100" type="text" placeholder="KhuBox에서 검색">
-    <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#!/settings">설정</a>
-        </li>
-    </ul>
+    <div class="w-100"></div>
+<!--    <ul class="navbar-nav px-3">-->
+<!--        <li class="nav-item text-nowrap">-->
+<!--            <a class="nav-link" href="#!/settings">설정</a>-->
+<!--        </li>-->
+<!--    </ul>-->
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <a class="nav-link" href="#!/logout">로그아웃</a>
@@ -161,12 +161,13 @@
                 </div>
             </div>
         </main>
+        <input type="hidden" id="this-group-id">
         <main id="manage_group" style="display:none;" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3">
                 <h1 class="h2">그룹 설정</h1>
             </div>
             <div class="accordion" id="manage_group_accord">
-                <div class="card">
+                <div id="card-1" style="display:none;" class="card">
                     <div class="card-header">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#manage_group_accord1" aria-expanded="true" aria-controls="collapseOne">
@@ -183,16 +184,16 @@
                                     <small class="form-text text-muted">변경할 그룹명을 입력해주세요.</small>
                                     <small class="form-text text-muted">모든 그룹원에게 변경이 반영됩니다.</small>
                                 </div>
-                                <button type="button" class="btn btn-primary" onclick="GroupJoin();">변경</button>
+                                <button type="button" class="btn btn-primary" onclick="ChangeGroupName();">변경</button>
                             </form>
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div id="card-2" style="display:none;" class="card">
                     <div class="card-header">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#manage_group_accord2" aria-expanded="false" aria-controls="collapseTwo">
-                                초대코드 조회 및 재발급
+                                초대코드 조회
                             </button>
                         </h2>
                     </div>
@@ -204,13 +205,11 @@
                                     <input type="text" class="form-control" id="group-invite-code" readonly>
                                     <small class="form-text text-muted">위의 초대코드를 입력하면 그룹원이 가입할 수 있습니다.</small>
                                 </div>
-                                <button type="button" class="btn btn-success" onclick="GroupCreate();">재발급</button>
-                                <small class="form-text text-muted">재발급할 경우 기존의 초대코드로는 더 이상 가입할 수 없습니다.</small>
                             </form>
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div id="card-3" style="display:none;" class="card">
                     <div class="card-header">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#manage_group_accord3" aria-expanded="false" aria-controls="collapseTwo">
@@ -233,7 +232,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div id="card-4" style="display:none;" class="card">
                     <div class="card-header">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#manage_group_accord4" aria-expanded="false" aria-controls="collapseTwo">
@@ -244,14 +243,14 @@
                     <div id="manage_group_accord4" class="collapse" data-parent="#manage_group_accord">
                         <div class="card-body">
                             <form>
-                                <button type="button" class="btn btn-warning" onclick="GroupCreate();">그룹 탈퇴</button>
+                                <button type="button" class="btn btn-warning" onclick="GroupExit();">그룹 탈퇴</button>
                                 <small class="form-text text-muted">탈퇴하면 그룹 내 파일에 접근할 수 없습니다.</small>
                                 <small class="form-text text-muted">초대코드를 받으면 재가입할 수 있습니다.</small>
                             </form>
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div id="card-5" style="display:none;" class="card">
                     <div class="card-header">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#manage_group_accord5" aria-expanded="false" aria-controls="collapseTwo">
