@@ -6,6 +6,12 @@ $("body").on('dblclick', 'tr.single-file', function(e) {
 });
 
 const ProcessHash = () => {
+  $('#card-1').hide();
+  $('#card-2').hide();
+  $('#card-3').hide();
+  $('#card-4').hide();
+  $('#card-5').hide();
+
   $('#menu-me').removeClass('active');
   $('#menu-public').removeClass('active');
   $('#menu-starred').removeClass('active');
@@ -74,6 +80,7 @@ const ProcessHash = () => {
     $('#main-1').show();
     $('#main-2').show();
     $('#manage_group').show();
+    ProcessGroup();
   } else if (location.hash.indexOf('#!/files/') > -1) {
     ProcessMain();
     $('#main-1').show();
@@ -354,7 +361,7 @@ const GetStarredList = () => {
 const GoShareLink = (file_id) => {
   $('#share-pop').append(`
             <div class="alert alert-info alert-dismissible fade show" role="alert">
-                ${`http://localhost:63342/front/#!/files/${file_id}`}
+                ${`https://khubox.khunet.net/#!/files/${file_id}`}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -784,4 +791,97 @@ const GroupCreate = () => {
       }
     }
   });
+};
+
+const ChangeGroupName = () => {
+  const post_data = {
+    name: $('#change-group-name').val(),
+  };
+  $.ajax({
+    url: `https://khubox-api.khunet.net/groups/${$('#this-group-id').val()}`,
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    type: 'PATCH',
+    data: JSON.stringify(post_data),
+    success: (response) => {
+      if (response.result === true) {
+        alert('성공적으로 변경되었습니다.');
+        getGroups();
+      } else {
+        alert(response.error)
+      }
+    }
+  });
+};
+
+const ProcessGroup = () => {
+  const group_id = location.hash.substring(10);
+  $('#this-group-id').val(group_id);
+
+  $.ajax({
+    url: `https://khubox-api.khunet.net/groups/${group_id}`,
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    type: 'GET',
+    success: (response) => {
+      if (response.result === true) {
+        $('#change-group-name').val(response.data.name);
+        if (response.data.is_owner === true) {
+          $('#group-invite-code').val(response.data.invite_code);
+          $('#card-1').show();
+          $('#card-2').show();
+          // $('#card-3').show();
+          // $('#card-5').show();
+        } else {
+          // $('#card-4').show();
+        }
+
+      } else {
+        alert(response.error)
+      }
+    }
+  });
+
+};
+
+const GroupExit = () => {
+  //
+  // $.ajax({
+  //   url: 'https://khubox-api.khunet.net/users/me',
+  //   headers: {
+  //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
+  //   },
+  //   type: 'GET',
+  //   success: (response) => {
+  //     if (response.result === true) {
+  //
+  //
+  //       $.ajax({
+  //         url: `https://khubox-api.khunet.net/groups/${$('#this-group-id').val()}/users/${response.data.id}`,
+  //         headers: {
+  //           'Authorization': `Bearer ${localStorage.getItem('token')}`,
+  //         },
+  //         type: 'DELETE',
+  //         success: (response) => {
+  //           if (response.result === true) {
+  //             alert('성공적으로 탈퇴되었습니다.');
+  //             getGroups();
+  //           } else {
+  //             alert(response.error)
+  //           }
+  //         }
+  //       });
+  //
+  //
+  //
+  //     } else {
+  //       alert(response.error);
+  //     }
+  //   }
+  // });
+
+
+
 };
