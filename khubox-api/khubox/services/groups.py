@@ -149,6 +149,7 @@ def find_item(request, group_id):
         'id': group[0].id,
         'name': group[0].name,
         'root_folder': group[0].root_folder,
+        'is_owner': False,
     }
 
     # If Owner

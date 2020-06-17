@@ -33,6 +33,7 @@ def list_item(request):
         data.append({
             'id': file.id,
             'type': file.type,
+            'parent_id': file.parent_id,
             'name': file.name,
             'size': file.size,
             'is_public': file.is_public,
@@ -141,10 +142,6 @@ def empty_trash(request):
 
 # 폴더/파일 조회
 def find_item(request, file_id):
-    # Check Login
-    if request.user_id is None:
-        return {'result': False, 'error': '로그인을 해주세요.'}
-
     # Query
     file = File.objects.filter(id=file_id, deleted_at__isnull=True)
 
@@ -174,13 +171,14 @@ def find_item(request, file_id):
 
     # Check Auth
     if is_auth is False:
-        return {'result': False, 'error': '잘못된 요청입니다.'}
+        return {'result': False, 'error': '권한이 없습니다.'}
 
     # Return File
     if file[0].type == 'file':
         download_url = sign_download(file[0].id)
         data = {
             'id': file[0].id,
+            'type': file[0].type,
             'parent_id': file[0].parent_id,
             'name': file[0].name,
             'size': file[0].size,
@@ -198,6 +196,7 @@ def find_item(request, file_id):
     # Structure
     data = {
         'id': file[0].id,
+        'type': file[0].type,
         'parent_id': file[0].parent_id,
         'name': file[0].name,
         'size': file[0].size,
@@ -211,6 +210,7 @@ def find_item(request, file_id):
         file_list.append({
             'id': file.id,
             'type': file.type,
+            'parent_id': file.parent_id,
             'name': file.name,
             'size': file.size,
             'is_public': file.is_public,
