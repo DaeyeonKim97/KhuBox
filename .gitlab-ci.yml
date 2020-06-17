@@ -16,15 +16,15 @@ deploy:
       - "$CI_PROJECT_DIR/khubox-api/venv"
   script:
     - cd $CI_PROJECT_DIR/khubox-api
-    - pip install --upgrade pip
-    - pip install awscli
+    - pip install --upgrade pip -i http://mirror.kakao.com/pypi/simple --trusted-host mirror.kakao.com
+    - pip install awscli -i http://mirror.kakao.com/pypi/simple --trusted-host mirror.kakao.com
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set region $AWS_DEFAULT_REGION
-    - pip install virtualenv
+    - pip install virtualenv -i http://mirror.kakao.com/pypi/simple --trusted-host mirror.kakao.com
     - python -m virtualenv venv
     - source venv/bin/activate
-    - pip install -r requirements.txt
+    - pip install -r requirements.txt -i http://mirror.kakao.com/pypi/simple --trusted-host mirror.kakao.com
     - zappa update
     - cd $CI_PROJECT_DIR/khubox-front
     - aws s3 cp ./ s3://khubox-deploy/ --recursive --include "*" --acl public-read
